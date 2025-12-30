@@ -1,0 +1,51 @@
+<h2>Gestión de Productos</h2>
+
+<form [formGroup]="form" style="display:flex; align-items:flex-end; gap:20px; flex-wrap:nowrap; margin-bottom:20px;">
+
+  <!-- Nombre producto -->
+  <div style="display:flex; flex-direction:column; position:relative; min-width:200px;">
+    <label>Nombre producto:</label>
+    <input type="text" placeholder="Nombre producto" formControlName="name">
+    <small *ngIf="form.controls['name'].invalid && form.controls['name'].touched" 
+           style="color:red; position:absolute; top:100%; left:0;">
+      Nombre obligatorio y máximo 100 caracteres
+    </small>
+  </div>
+
+  <!-- Valor -->
+  <div style="display:flex; flex-direction:column; position:relative; min-width:150px;">
+    <label>Valor:</label>
+    <input type="text" placeholder="Valor" formControlName="value">
+    <small *ngIf="form.controls['value'].invalid && form.controls['value'].touched" 
+           style="color:red; position:absolute; top:100%; left:0;">
+      Valor obligatorio y solo números
+    </small>
+  </div>
+
+  <!-- Botones Guardar y Limpiar -->
+  <div style="display:flex; flex-direction:1; gap:5px;">
+    <button type="button" (click)="save()">Guardar</button>
+    <button type="button" (click)="reset()">Limpiar</button>
+  </div>
+
+</form>
+
+<table border="1" cellspacing="0" cellpadding="5">
+  <thead>
+    <tr>
+      <th>Nombre</th>
+      <th>Valor</th>
+      <th>Acciones</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let p of products; trackBy: trackById">
+      <td>{{ p.name }}</td>
+      <td>{{ format(p.value) }}</td>
+      <td>
+        <button (click)="edit(p)">Editar</button>
+        <button (click)="delete(p.id)">Eliminar</button>
+      </td>
+    </tr>
+  </tbody>
+</table>
